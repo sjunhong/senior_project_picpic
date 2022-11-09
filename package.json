@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
+    "build": "tsc -p ."
   },
   "author": "",
   "license": "MIT",
@@ -33,6 +34,7 @@
     "aws-sdk": "^2.955.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "libvips": "^0.0.2",
     "multer": "^1.4.2",
     "mysql": "^2.18.1",
     "ngrok": "^4.0.1",
@@ -40,9 +42,5 @@
     "sharp": "^0.28.3",
     "typeorm": "^0.2.34",
     "typeorm-snake-naming-strategy": "^1.0.2"
-  },
-  "scripts": {
-    "dev": "nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
-    "build": "tsc -p ."
   }
 }

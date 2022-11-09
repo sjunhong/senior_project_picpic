@@ -65,6 +65,7 @@ export class InfrastructuresStack extends cdk.Stack {
         'ecr:BatchGetImage',
         'logs:CreateLogStream',
         'logs:PutLogEvents',
+        'secretsmanager:GetSecretValue',
       ],
     })
 
@@ -106,7 +107,7 @@ export class InfrastructuresStack extends cdk.Stack {
           Secret.fromSecretPartialArn(
             this,
             'db-secrets/username',
-            'arn:aws:secretsmanager:us-east-2:969575637420:secret:db-credentials-UrH0NG'
+            'arn:aws:secretsmanager:us-east-2:969575637420:secret:/db-credentials-a6HmeY'
           ),
           'username'
         ),
@@ -114,7 +115,7 @@ export class InfrastructuresStack extends cdk.Stack {
           Secret.fromSecretPartialArn(
             this,
             'db-secrets/password',
-            'arn:aws:secretsmanager:us-east-2:969575637420:secret:db-credentials-UrH0NG'
+            'arn:aws:secretsmanager:us-east-2:969575637420:secret:/db-credentials-a6HmeY'
           ),
           'password'
         ),
@@ -166,7 +167,7 @@ export class InfrastructuresStack extends cdk.Stack {
       webhookFilters: [
         codebuild.FilterGroup.inEventOf(
           codebuild.EventAction.PULL_REQUEST_MERGED
-        ).andBranchIs('main'),
+        ).andBranchIs('master'),
       ], // optional, by default all pushes and Pull Requests will trigger a build
     })
 
@@ -227,7 +228,7 @@ export class InfrastructuresStack extends cdk.Stack {
       actionName: 'GitHub_Source',
       owner: 'sjunhong',
       repo: 'senior_project_picpic',
-      branch: 'main',
+      branch: 'master',
       oauthToken: cdk.SecretValue.secretsManager('github-token'),
       output: sourceOutput,
     })

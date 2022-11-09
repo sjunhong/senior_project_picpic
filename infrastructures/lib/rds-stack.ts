@@ -23,16 +23,16 @@ export class RdsStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props: RdsStackProps) {
     super(scope, id, props)
 
-    // const dbSecrets = Secret.fromSecretPartialArn(
-    //   this,
-    //   'db-secrets',
-    //   'arn:aws:secretsmanager:us-east-2:969575637420:secret:db-credentials-UrH0NG'
-    // )
+    const db_secrets = Secret.fromSecretPartialArn(
+      this,
+      'db-secrets',
+      'arn:aws:secretsmanager:us-east-2:969575637420:secret:/db-credentials-a6HmeY'
+    )
 
     this.dbInstance = new rds.DatabaseInstance(this, 'db-instance', {
       vpc: props.vpc,
       vpcSubnets: {
-        subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
+        subnetType: ec2.SubnetType.PUBLIC,
       },
       engine: rds.DatabaseInstanceEngine.mysql({
         version: rds.MysqlEngineVersion.VER_8_0_25,
@@ -41,7 +41,7 @@ export class RdsStack extends cdk.Stack {
         ec2.InstanceClass.T2,
         ec2.InstanceSize.MICRO
       ),
-      // credentials: rds.Credentials.fromSecret(dbSecrets),
+      credentials: rds.Credentials.fromSecret(db_secrets),
       multiAz: false,
       allocatedStorage: 20,
       maxAllocatedStorage: 1000,
@@ -63,7 +63,7 @@ export class RdsStack extends cdk.Stack {
         Secret.fromSecretPartialArn(
           this,
           'db-secrets/username',
-          'arn:aws:secretsmanager:us-east-2:969575637420:secret:db-credentials-UrH0NG'
+          'arn:aws:secretsmanager:us-east-2:969575637420:secret:/db-credentials-a6HmeY'
         ),
         'username'
       ),
@@ -71,7 +71,7 @@ export class RdsStack extends cdk.Stack {
         Secret.fromSecretPartialArn(
           this,
           'db-secrets/password',
-          'arn:aws:secretsmanager:us-east-2:969575637420:secret:db-credentials-UrH0NG'
+          'arn:aws:secretsmanager:us-east-2:969575637420:secret:/db-credentials-a6HmeY'
         ),
         'password'
       ),
