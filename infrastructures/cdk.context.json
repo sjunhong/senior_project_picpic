@@ -1,0 +1,8 @@
+{
+  "availability-zones:account=969575637420:region=us-east-2": [
+    "us-east-2a",
+    "us-east-2b",
+    "us-east-2c",
+    "us-east-2d"
+  ]
+}
