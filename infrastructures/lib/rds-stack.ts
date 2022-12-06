@@ -52,7 +52,7 @@ export class RdsStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       deletionProtection: false,
       databaseName: 'picpic_db',
-      publiclyAccessible: false,
+      publiclyAccessible: true,
     })
 
     this.dbCredentials = {
@@ -77,6 +77,6 @@ export class RdsStack extends cdk.Stack {
       ),
     }
 
-    this.dbInstance.connections.allowDefaultPortInternally()
+    this.dbInstance.connections.allowDefaultPortFromAnyIpv4()
   }
 }

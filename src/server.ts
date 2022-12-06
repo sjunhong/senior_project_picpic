@@ -36,8 +36,8 @@ export default class Server {
     this.app.use(cors(corsOption))
     this.app.use(express.json())
     this.app.use(express.urlencoded({ extended: true }))
-    this.app.get('/health', (request, response) => {
-      return response.status(200).send('server healthy')
+    this.app.get('/', (request, response) => {
+      return response.status(200).send('code has changed!')
     })
     this.app.use('/v1/auth', authRouter)
     this.app.use('/v1/votes', jwtCheck, voteRouter)
