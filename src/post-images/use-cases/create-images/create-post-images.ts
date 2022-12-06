@@ -10,7 +10,6 @@ import { UniqueEntityId } from '../../../core/infra/unique-entity-id'
 import { IPostImageRepository } from 'post-images/repositories/post-image-repository.interface'
 import { Extension } from 'post-images/domain/extension'
 import { ExtensionType } from '../../domain/extension'
-import sharp from 'sharp'
 
 type Response = CreatePostImagesOutputDto | CreateImagesError.S3UploadFailed
 
@@ -33,16 +32,6 @@ export class CreatePostImages {
         try {
           imageUrl = (await s3upload(imageFile)) as string
           console.log(`imageUrl created from AWS S3: ${imageUrl}`)
-
-          const thumbnailImage: ImageFile = {
-            originalname: `thumbnail_${imageFile.originalname}`,
-            mimetype: imageFile.mimetype,
-            buffer: await sharp(imageFile.buffer)
-              .resize({ width: 270, height: 270, fit: 'inside' })
-              .toBuffer(),
-          }
-          thumbnailUrl = (await s3upload(thumbnailImage)) as string
-          console.log(`thumbnailUrl created from AWS S3: ${thumbnailUrl}`)
         } catch (error) {
           return new CreateImagesError.S3UploadFailed()
         }
